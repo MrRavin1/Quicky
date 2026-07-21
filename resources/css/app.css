@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'opsz' auto;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+  
+  .glass-premium {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .shadow-premium {
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+  
+  .shadow-premium-hover {
+    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  
+  .text-shadow {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+  
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+  
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+  }
+  
+  .btn-premium {
+    @apply font-semibold rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-98;
+  }
+  
+  .card-premium {
+    @apply bg-white/95 backdrop-blur-sm rounded-2xl shadow-card border border-white/30 hover:shadow-card-hover transition-all duration-300;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Mobile safe area support */
+  @supports (padding: max(0px)) {
+    .safe-bottom {
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+  }
+  
+  /* Smooth scrolling for mobile */
+  @media (max-width: 1024px) {
+    * {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
