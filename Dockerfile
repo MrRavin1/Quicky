@@ -33,26 +33,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Copy composer files first for layer caching
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
-
-# Copy package files and install JS deps
-COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts
-
-# Copy the rest of the app
+# Copy full app first so composer scripts have access to all files
 COPY . .
 
-# Build frontend assets
-RUN npm run build
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Run composer post-install scripts
-RUN composer run-script post-autoload-dump
+# Install JS dependencies and build frontend
+RUN npm ci && npm run build
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Nginx config
 COPY docker/nginx.conf /etc/nginx/nginx.conf
