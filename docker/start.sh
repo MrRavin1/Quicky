@@ -16,6 +16,17 @@ php artisan view:cache
 # Run migrations first (creates the cache/sessions tables)
 php artisan migrate --force
 
+# Seed initial data if stores table is empty
+php artisan tinker --execute="
+if (\App\Models\Store::count() === 0) {
+    \Artisan::call('db:seed', ['--class' => 'StoresTableSeeder', '--force' => true]);
+    \Artisan::call('db:seed', ['--class' => 'ProductsTableSeeder', '--force' => true]);
+    echo 'Seeded stores and products.' . PHP_EOL;
+} else {
+    echo 'Data already exists, skipping seed.' . PHP_EOL;
+}
+" 2>&1 || true
+
 # Now clear DB cache safely
 php artisan cache:clear
 
