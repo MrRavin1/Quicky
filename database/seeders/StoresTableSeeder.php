@@ -13,6 +13,8 @@ class StoresTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $adminId = \App\Models\User::where('role', 'admin')->first()?->id ?? 1;
+
         $stores = [
             [
                 'name' => 'Pizza Palace',
@@ -29,6 +31,7 @@ class StoresTableSeeder extends Seeder
                 'is_active' => true,
                 'delivery_fee' => 50.00,
                 'estimated_delivery_minutes' => 30,
+                'created_by' => $adminId,
             ],
             [
                 'name' => 'Burger King',
@@ -45,6 +48,7 @@ class StoresTableSeeder extends Seeder
                 'is_active' => true,
                 'delivery_fee' => 40.00,
                 'estimated_delivery_minutes' => 25,
+                'created_by' => $adminId,
             ],
             [
                 'name' => 'Big Mart',
@@ -61,6 +65,7 @@ class StoresTableSeeder extends Seeder
                 'is_active' => true,
                 'delivery_fee' => 30.00,
                 'estimated_delivery_minutes' => 20,
+                'created_by' => $adminId,
             ],
             [
                 'name' => 'Med Plus Pharmacy',
@@ -77,6 +82,7 @@ class StoresTableSeeder extends Seeder
                 'is_active' => true,
                 'delivery_fee' => 25.00,
                 'estimated_delivery_minutes' => 15,
+                'created_by' => $adminId,
             ],
         ];
 
